@@ -7,14 +7,18 @@ use App\Models\User;
 
 class JobService
 {
-    public function listEmployerJobs(User $employer)
+   public function listEmployerJobs(User $employer)
     {
-        return $employer->jobs()->latest()->paginate();
+        return Job::where('company_id', $employer->company_id)
+            ->latest()
+            ->paginate();
     }
 
     public function createJob(User $employer, array $data): Job
     {
-        $data['employer_id'] = $employer->id;
+        $data['company_id'] = $employer->company_id;
+        $data['posted_by']  = $employer->id;
+
         return Job::create($data);
     }
 
