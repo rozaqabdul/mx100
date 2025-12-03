@@ -1,4 +1,4 @@
-# MX100 Job Portal API (Simplified)
+# MX100 Job Portal API
 
 MX100 adalah job portal sederhana yang menghubungkan **employer** dan **freelancer**, dibangun menggunakan **Laravel 12**, Sanctum, dan Spatie Permission.
 
