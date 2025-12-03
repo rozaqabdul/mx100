@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('cv_path');
             $table->text('cover_letter')->nullable();
             $table->timestamps();
-            $table->timestamps();
 
             $table->unique(['job_vacancy_id', 'freelancer_id']);
         });
