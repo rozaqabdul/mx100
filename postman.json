@@ -163,6 +163,21 @@
           }
         },
         {
+          "name": "List Applications for Job (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employer/jobs/1/applications",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","employer","jobs","1","applications"]
+            }
+          }
+        },
+        {
           "name": "Create Job",
           "request": {
             "method": "POST",
