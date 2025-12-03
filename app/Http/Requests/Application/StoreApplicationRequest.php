@@ -11,7 +11,17 @@ class StoreApplicationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        $user = $this->user();
+        if (! $user || ! $user->hasRole('freelancer')) {
+            return false;
+        }
+
+        $job = $this->route('job');
+        if ($job && $job->status !== 'published') {
+            return false;
+        }
+
+        return true;
     }
 
     /**

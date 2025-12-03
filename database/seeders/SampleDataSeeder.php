@@ -28,7 +28,7 @@ class SampleDataSeeder extends Seeder
             ['email' => 'employer@mx100.test'],
             [
                 'name'       => 'MX100 Employer',
-                'password'   => bcrypt('password'), // untuk testing
+                'password'   => bcrypt('password'),
                 'company_id' => $company->id,
                 'email_verified_at' => now(),
                 'remember_token'    => Str::random(10),
@@ -93,8 +93,8 @@ class SampleDataSeeder extends Seeder
 
         Application::firstOrCreate(
             [
-                'job_id'        => $publishedJob->id,
-                'freelancer_id' => $freelancer1->id,
+                'job_vacancy_id'    => $publishedJob->id,
+                'freelancer_id'     => $freelancer1->id,
             ],
             [
                 'cv_path'      => 'cvs/freelancer1-sample-cv.pdf',
@@ -104,8 +104,8 @@ class SampleDataSeeder extends Seeder
 
         Application::firstOrCreate(
             [
-                'job_id'        => $publishedJob->id,
-                'freelancer_id' => $freelancer2->id,
+                'job_vacancy_id'    => $publishedJob->id,
+                'freelancer_id'     => $freelancer2->id,
             ],
             [
                 'cv_path'      => 'cvs/freelancer2-sample-cv.pdf',

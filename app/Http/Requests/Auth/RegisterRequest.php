@@ -11,7 +11,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,7 +26,11 @@ class RegisterRequest extends FormRequest
             'email' => ['required','email','unique:users,email'],
             'password' => ['required','min:6'],
             'role' => ['required','in:employer,freelancer'],
-            'company_name' => ['required_if:role,employer','nullable','string'],
+            'company.name' => ['required_if:role,employer', 'string'],
+            'company.slug' => ['required_if:role,employer', 'string'],
+            'company.industry' => ['required_if:role,employer', 'string'],
+            'company.website' => ['required_if:role,employer', 'url'],
+            'company.description' => ['required_if:role,employer', 'string'],
         ];
     }
 }

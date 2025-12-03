@@ -1,0 +1,253 @@
+{
+  "info": {
+    "name": "MX100 API",
+    "_postman_id": "b9a01af2-e100-4c7b-8aaa-mx100final",
+    "description": "MX100 Job Portal API Collection dengan auto-token scripting",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "token",
+      "value": "xxxxx"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MX100 Employer\",\n  \"email\": \"employer@mx100.test\",\n  \"password\": \"password\",\n  \"role\": \"employer\",\n  \"company\": {\n    \"name\": \"Koperasi Nusantara\",\n    \"slug\": \"koperasi-nusantara\",\n    \"industry\": \"IT Services\",\n    \"website\": \"https://koperasi-nusantara.test\",\n    \"description\": \"Divisi IT Development yang mengelola platform MX100.\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/register",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","register"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let res = pm.response.json();",
+                  "if (res.token) {",
+                  "  pm.collectionVariables.set('token', res.token);",
+                  "  console.log('Token saved:', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"employer@mx100.test\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/login",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let res = pm.response.json();",
+                  "if (res.token) {",
+                  "  pm.collectionVariables.set('token', res.token);",
+                  "  console.log('Token saved:', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login as Freelancer (example)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"freelancer1@mx100.test\",\n  \"password\": \"password\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/login",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "let res = pm.response.json();",
+                  "if (res.token) {",
+                  "  pm.collectionVariables.set('token', res.token);",
+                  "  console.log('Token saved (freelancer):', res.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Employer",
+      "item": [
+        {
+          "name": "List Employer Jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employer/jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api", "v1", "employer", "jobs"]
+            }
+          }
+        },
+        {
+          "name": "View Job by ID (Employer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/employer/jobs/1",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","employer","jobs","1"]
+            }
+          }
+        },
+        {
+          "name": "Create Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Backend Laravel Developer\",\n  \"description\": \"API untuk MX100\",\n  \"status\": \"published\",\n  \"location\": \"Remote\",\n  \"budget_min\": 8000000,\n  \"budget_max\": 12000000\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/employer/jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","employer","jobs"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Freelancer",
+      "item": [
+        {
+          "name": "List Published Jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/freelancer/jobs",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","freelancer","jobs"]
+            }
+          }
+        },
+        {
+          "name": "View Job by ID (Freelancer)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/v1/freelancer/jobs/1",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","freelancer","jobs","1"]
+            }
+          }
+        },
+        {
+          "name": "Apply Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Accept", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "cv",
+                  "type": "file",
+                  "src": ""
+                },
+                {
+                  "key": "cover_letter",
+                  "type": "text",
+                  "value": "Saya ingin bergabung..."
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/v1/freelancer/jobs/1/apply",
+              "host": ["{{base_url}}"],
+              "path": ["api","v1","freelancer","jobs","1","apply"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

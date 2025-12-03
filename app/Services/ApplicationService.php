@@ -13,7 +13,7 @@ class ApplicationService
         $path = $data['cv']->store('cvs', 'public');
 
         return Application::create([
-            'job_id'        => $job->id,
+            'job_vacancy_id'=> $job->id,
             'freelancer_id' => $freelancer->id,
             'cv_path'       => $path,
             'cover_letter'  => $data['cover_letter'] ?? null,
