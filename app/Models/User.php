@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Company::class);
     }
+
+    public function jobs()
+    {
+        return $this->hasMany(JobVacancy::class, 'employer_id');
+    }
+
+    public function applications()
+    {
+        return $this->hasMany(Application::class, 'freelancer_id');
+    }
 }
